@@ -11,22 +11,22 @@ function App() {
   const x = useSpring(xRange, {stiffness: 400, damping: 90})
 
   const scrollRange = useTransform(scrollY, [0, innerHeight * 1.8], [0, 2.8])
-  const scrollSpring = useSpring(scrollRange, {stiffness: 400, damping: 90})
+  const scrollSpring = useSpring(scrollRange, {stiffness: 500, damping: 100})
   const [propStyle, setPropStyle] = useState<CSSProperties>({});
 
   useEffect(() => {
     scrollSpring?.onChange(y => {
       const containerSize = Math.min(document.body.clientWidth * .88, 1_400); // 88% or 1_400
-      const nestScale = Math.min(.5, y / 2) + 1; // max 1.5
-      const circleSize = containerSize * nestScale * .134 / 2;
-      const nextTranslate = containerSize * nestScale * .005; // 55 at half;
+      const nestScale = Math.min(.6, y / 2) + 1; // max 1.5
+      const circleSize = containerSize * nestScale * .125 / 2;
+      const nestTranslate = (containerSize * y / 4) - circleSize * 1.2; // 55 at half;
 
       const oldCircle = Math.max((y * Math.min(y / 3, 1) / 2.8) * Math.max(innerHeight, innerWidth), 60);
 
       setPropStyle({
         '--container-size': `${containerSize}`,
         '--nest-scale-progress': `${nestScale}`,
-        '--nest-translate-progress': `${nextTranslate}px`,
+        '--nest-translate-progress': `${nestTranslate}px`,
         '--clip-scenario-progress': `${100 - Math.min(y, 1) * 100}%`,
         '--clip-circle-progress': `${Math.max(oldCircle, circleSize)}px`,
       } as CSSProperties)
@@ -37,14 +37,17 @@ function App() {
 
   return (
       <div>
-       <section className={'bg-gray-50'}>
-         <div className="container py-4 mb-5 text-center">
-           <p className={'text-sm'}>Prototype, inspired by <a href="https://store.google.com/product/nest_doorbell_battery"
-           target={'_blank'} rel={'noreferrer'}>Google store</a>, coded by <a href="https://www.sentiero.digital/" target="_blank">Sentiero.digital</a> check the
-             code on <a href="https://github.com/Sentiero-digital/ikea-card-system" target="_blank"
-                        rel="noreferrer">Github</a></p>
-         </div>
-       </section>
+        <section className={'fixed bottom-0 left-0 right-0 w-full z-40 bg-gray-50'}>
+          <div className="container py-4 text-center">
+            <p className={'text-sm mb-0'}>Prototype, inspired by <a
+                href="https://store.google.com/product/nest_doorbell_battery"
+                target={'_blank'} rel={'noreferrer'}>Google store</a>, coded by <a href="https://www.sentiero.digital/"
+                                                                                   target="_blank">Sentiero.digital</a> check
+              the
+              code on <a href="https://github.com/Sentiero-digital/ikea-card-system" target="_blank"
+                         rel="noreferrer">Github</a></p>
+          </div>
+        </section>
 
         <motion.div className="App relative"
                     style={propStyle}>
@@ -57,19 +60,18 @@ function App() {
               </h2>
             </div>
 
-            <div className="sticky z-20 top-0 min-h-screen">
-
-              <div className="block absolute overflow-hidden inset-0 z-10">
-                <div className="container">
-                  <img
-                      src="https://lh3.googleusercontent.com/ZcZLGe-qvr_1cWQKYZ8Mv-3YDGGXm2KQnXrUUyljvYl6DFYJSJwjRseMnd7XMsHCtwfaSnrqlWbLnUBN1yaLPr77Rg3_Pgmx=w2000"
-                      alt=""
-                      style={{}}
-                      className={'nest w-full h-auto'}
-                  />
-                </div>
+            <div className="absolute overflow-hidden inset-0 z-10">
+              <div className="container">
+                <img
+                    src="https://lh3.googleusercontent.com/ZcZLGe-qvr_1cWQKYZ8Mv-3YDGGXm2KQnXrUUyljvYl6DFYJSJwjRseMnd7XMsHCtwfaSnrqlWbLnUBN1yaLPr77Rg3_Pgmx=w2000"
+                    alt=""
+                    style={{}}
+                    className={'nest w-full h-auto'}
+                />
               </div>
+            </div>
 
+            <div className="sticky z-20 top-0 min-h-screen">
               <div className="clip-sipario relative z-20 min-h-screen">
                 <div className="absolute inset-0 pointer-events-none z-20 bg-stone-200 overflow-hidden">
                   <div className="absolute inset-0">
@@ -96,7 +98,7 @@ function App() {
           </header>
 
         </motion.div>
-        <div className="min-h-screen py-10" />
+        <div className="min-h-screen py-10"/>
       </div>
   )
 }
