@@ -1,42 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+a {
+  --after-content: none;
+  text-decoration: underline;
+  text-underline-position: under;
+
+  &:after {
+    content: var(--after-content);
+  }
+
+  &:not([href^="#"]) {
+    --after-content: " →"
+  }
+
+  &[target="_blank"] {
+    --after-content: " ↗";
+  }
+
+  &[download] {
+    --after-content: " ↓";
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 .App {
-  text-align: center;
-}
+  --nest-scale-progress: 1;
+  --nest-translate-progress: 0;
+  --clip-scenario-progress: 100%;
+  --clip-circle-progress: 100%;
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+  .clip-sipario {
+    clip-path: inset(var(--clip-scenario-progress, 0%) 0% 0% 0%);
+    will-change: clip-path;
+  }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+  .clip-circle {
+    clip-path: circle(var(--clip-circle-progress, 0%) at 50% 50%);
+    will-change: clip-path;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.nest {
+  aspect-ratio: 1;
+  object-fit: contain;
+  object-position: bottom;
+  transform: scale(var(--nest-scale-progress, 1)) translateY(var(--nest-translate-progress, 0));
+  transform-origin: center;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-button {
-  font-size: calc(10px + 2vmin);
+.scrolling-title {
+  color: #fff;
+  font-size: 25vw;
+  position: absolute;
+  top: 25%;
+  left: 50%;
 }
