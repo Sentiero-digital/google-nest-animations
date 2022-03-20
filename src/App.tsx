@@ -44,7 +44,7 @@ function App() {
                 target={'_blank'} rel={'noreferrer'}>Google store</a>, coded by <a href="https://www.sentiero.digital/"
                                                                                    target="_blank">Sentiero.digital</a> check
               the
-              code on <a href="https://github.com/Sentiero-digital/ikea-card-system" target="_blank"
+              code on <a href="https://github.com/Sentiero-digital/google-nest-animations" target="_blank"
                          rel="noreferrer">Github</a></p>
           </div>
         </section>
