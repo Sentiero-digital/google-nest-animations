@@ -11,15 +11,15 @@ function App() {
   const x = useSpring(xRange, {stiffness: 400, damping: 90})
 
   const scrollRange = useTransform(scrollY, [0, innerHeight * 1.8], [0, 2.8])
-  const scrollSpring = useSpring(scrollRange, {stiffness: 500, damping: 100})
+  // const scrollSpring = useSpring(scrollRange, {stiffness: 500, damping: 100})
   const [propStyle, setPropStyle] = useState<CSSProperties>({});
 
   useEffect(() => {
-    scrollSpring?.onChange(y => {
+    scrollRange?.onChange(y => {
       const containerSize = Math.min(document.body.clientWidth * .88, 1_400); // 88% or 1_400
       const nestScale = Math.min(.6, y / 2) + 1; // max 1.5
       const circleSize = containerSize * nestScale * .125 / 2;
-      const nestTranslate = (containerSize * y / 4) - circleSize * 1.2; // 55 at half;
+      const nestTranslate = (containerSize * y / 2) - circleSize * 1.25; // 55 at half;
 
       const oldCircle = Math.max((y * Math.min(y / 3, 1) / 2.8) * Math.max(innerHeight, innerWidth), 60);
 
@@ -32,7 +32,7 @@ function App() {
       } as CSSProperties)
     });
 
-    return () => scrollSpring.destroy();
+    return () => scrollRange.destroy();
   }, [])
 
   return (
